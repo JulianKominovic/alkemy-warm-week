@@ -1,0 +1,100 @@
+import React, { useEffect, useState } from "react";
+import {
+  Container,
+  Row,
+  Col,
+  Card,
+  Button,
+  ListGroup,
+  Spinner,
+  InputGroup,
+  FormControl,
+} from "react-bootstrap";
+import Paginator from "../components/Paginator";
+import PostCard from "../components/PostCard";
+
+import { getAllPosts } from "../services/postsApi";
+
+const MAX_POSTS_PER_PAGE = 10;
+const Home = () => {
+  const [page, setPage] = useState(0);
+  const [posts, setPosts] = useState([]);
+  const [loadingPosts, setLoadingPosts] = useState(false);
+  const [searchingId, setSearchingId] = useState(-1);
+
+  const handleSearchByIdChange = (e) => {
+    console.log(e.target.value);
+    if (e.target.value === "") {
+      setSearchingId(-1);
+    } else {
+      setSearchingId(parseInt(e.target.value));
+    }
+  };
+
+  useEffect(() => {
+    setLoadingPosts(true);
+
+    getAllPosts()
+      .then((res) => setPosts(res))
+      .catch((err) => console.log(err));
+    setLoadingPosts(false);
+  }, []);
+
+  useEffect(() => {}, [searchingId]);
+
+  return (
+    <Container className="py-4" fluid>
+      <h1>Posts</h1>
+      <InputGroup className="mb-3">
+        <FormControl
+          type="number"
+          onChange={handleSearchByIdChange}
+          placeholder="Search by id"
+          aria-label="Search by id"
+          aria-describedby="search-by-id"
+        />
+      </InputGroup>
+      <Row>
+        <Col>
+          <Card>
+            <Card.Header className="d-flex justify-content-between align-items-center">
+              <h2>List</h2>
+              <Button variant="primary">Add post</Button>
+            </Card.Header>
+            {/* LOADING SPINNER OR POSTS */}
+            {!loadingPosts ? (
+              <ListGroup>
+                {/* LOADS ALL POSTS WITH PAGINATION */}
+                {posts.map((post, i) =>
+                  i >= MAX_POSTS_PER_PAGE * page &&
+                  i < MAX_POSTS_PER_PAGE * (page + 1) &&
+                  searchingId === -1 ? (
+                    <PostCard key={post.id} {...post} />
+                  ) : null
+                )}
+                {/* LOADS ONLY THE POST SEARCH BY ID */}
+                {/* TODO si hubiese un context con los post del usuario, podria removerlo de ahi al presionar el boton de eliminar */}
+                {posts.map((post) =>
+                  post.id === searchingId ? (
+                    <PostCard key={post.id} {...post} />
+                  ) : null
+                )}
+              </ListGroup>
+            ) : (
+              <Container className="d-flex m-5 justify-content-center">
+                <Spinner animation="grow" role="status">
+                  <span className="visually-hidden">Loading...</span>
+                </Spinner>
+              </Container>
+            )}
+          </Card>
+        </Col>
+      </Row>
+      <Row className="py-5 d-flex justify-content-center">
+        <Paginator setPage={setPage} currentPage={page} minPage={0}></Paginator>
+      </Row>
+    </Container>
+  );
+};
+
+export default Home;
