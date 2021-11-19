@@ -5,14 +5,14 @@ import axios from "axios";
 
 // TODO hacer un objeto con cada status que podria devolver la api y en base a eso retornar los mensajes correspondientes
 // TODO implementarlo en las response, reject de cada llamada a la api
-const responses = {
-  200: "OK",
-  201: "Created",
-  204: "No content",
-  400: "Bad request",
-  404: "Not found",
-  500: "Internal server error",
-};
+// const responses = {
+//   200: "OK",
+//   201: "Created",
+//   204: "No content",
+//   400: "Bad request",
+//   404: "Not found",
+//   500: "Internal server error",
+// };
 // https://http.cat/
 
 const BASE_URL = "https://jsonplaceholder.typicode.com/posts";
