@@ -73,9 +73,8 @@ const PostActionButtons = ({ id }) => {
           callbackAction={() =>
             removePost(id)
               .then(() => {
-                console.log("eliminado");
                 setNewActionName("Remove");
-                activateNotification(); //aca
+                activateNotification();
 
                 setTimeout(() => {
                   removePostFromContext(id);
