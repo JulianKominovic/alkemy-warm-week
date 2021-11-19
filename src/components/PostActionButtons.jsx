@@ -14,6 +14,8 @@ const PostActionButtons = ({ id }) => {
   const isInInfoLocation = pathname === `/info/${id}`;
   // CHECK IF CURRENT LOCATION IS ON /EDIT/any-id
   const isInEditLocation = pathname === `/edit/${id}`;
+  //CHECKS IF THE CURRENT LOCATION IS /CREATE
+  const isInCreateLocation = pathname === `/create`;
 
   // MODAL STATE
   const [show, setShow] = useState(false);
@@ -31,7 +33,9 @@ const PostActionButtons = ({ id }) => {
         <Link
           to={`/info/${id}`}
           className={
-            isInInfoLocation || isInEditLocation ? "disabled-link" : undefined
+            isInInfoLocation || isInEditLocation || isInCreateLocation
+              ? "disabled-link"
+              : undefined
           }
         >
           <Button variant="outline-secondary" className="w-100">
@@ -43,7 +47,9 @@ const PostActionButtons = ({ id }) => {
       <Col>
         <Link
           to={`/edit/${id}`}
-          className={isInEditLocation ? "disabled-link" : undefined}
+          className={
+            isInEditLocation || isInCreateLocation ? "disabled-link" : undefined
+          }
         >
           <Button variant="outline-info" className="w-100">
             <AiFillEdit></AiFillEdit>
@@ -80,7 +86,9 @@ const PostActionButtons = ({ id }) => {
         <Button
           variant="outline-danger"
           onClick={handleShow}
-          className={`w-100 ${isInEditLocation ? "disabled-link" : undefined}`}
+          className={`w-100 ${
+            isInEditLocation || isInCreateLocation ? "disabled-link" : undefined
+          }`}
         >
           <AiFillDelete />
         </Button>

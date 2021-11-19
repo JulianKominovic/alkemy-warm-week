@@ -10,20 +10,19 @@ import {
   InputGroup,
   FormControl,
 } from "react-bootstrap";
+import { Link } from "react-router-dom";
 import Paginator from "../components/Paginator";
 import PostCard from "../components/PostCard";
-
-import { getAllPosts } from "../services/postsApi";
+import usePosts from "../hooks/usePosts";
 
 const MAX_POSTS_PER_PAGE = 10;
 const Home = () => {
+  const { getAllPosts } = usePosts();
   const [page, setPage] = useState(0);
-  const [posts, setPosts] = useState([]);
-  const [loadingPosts, setLoadingPosts] = useState(false);
+  const [loadingPosts, setLoadingPosts] = useState(true);
   const [searchingId, setSearchingId] = useState(-1);
 
   const handleSearchByIdChange = (e) => {
-    console.log(e.target.value);
     if (e.target.value === "") {
       setSearchingId(-1);
     } else {
@@ -32,15 +31,8 @@ const Home = () => {
   };
 
   useEffect(() => {
-    setLoadingPosts(true);
-
-    getAllPosts()
-      .then((res) => setPosts(res))
-      .catch((err) => console.log(err));
     setLoadingPosts(false);
-  }, []);
-
-  useEffect(() => {}, [searchingId]);
+  }, [getAllPosts]);
 
   return (
     <Container className="py-4" fluid>
@@ -59,13 +51,15 @@ const Home = () => {
           <Card>
             <Card.Header className="d-flex justify-content-between align-items-center">
               <h2>List</h2>
-              <Button variant="primary">Add post</Button>
+              <Link to="/create">
+                <Button variant="primary">Add post</Button>
+              </Link>
             </Card.Header>
             {/* LOADING SPINNER OR POSTS */}
             {!loadingPosts ? (
               <ListGroup>
                 {/* LOADS ALL POSTS WITH PAGINATION */}
-                {posts.map((post, i) =>
+                {getAllPosts().map((post, i) =>
                   i >= MAX_POSTS_PER_PAGE * page &&
                   i < MAX_POSTS_PER_PAGE * (page + 1) &&
                   searchingId === -1 ? (
@@ -74,7 +68,7 @@ const Home = () => {
                 )}
                 {/* LOADS ONLY THE POST SEARCH BY ID */}
                 {/* TODO si hubiese un context con los post del usuario, podria removerlo de ahi al presionar el boton de eliminar */}
-                {posts.map((post) =>
+                {getAllPosts().map((post) =>
                   post.id === searchingId ? (
                     <PostCard key={post.id} {...post} />
                   ) : null

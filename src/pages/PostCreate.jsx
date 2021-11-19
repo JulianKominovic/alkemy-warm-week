@@ -1,18 +1,17 @@
 import React from "react";
+
 import { Container, Row } from "react-bootstrap";
 import ActionButton from "../components/ActionButton";
 import ActionNotification from "../components/ActionNotification";
 import EditingPostForm from "../components/EditingPostForm";
 import useNotificationStatus from "../hooks/useNotificationStatus";
 import usePosts from "../hooks/usePosts";
-import { updatePost } from "../services/postsApi";
+import { createPost } from "../services/postsApi";
 import PostInfo from "./PostInfo";
 import useModal from "../hooks/useModal";
-import useSpecificPost from "../hooks/useSpecificPost";
-
-const PostEdit = () => {
-  const { modifyPost } = usePosts();
-
+import useAbstractPost from "../hooks/useAbstractPost";
+const PostCreate = () => {
+  const { addPost } = usePosts();
   const {
     setNewErrorName,
     setNewActionName,
@@ -23,24 +22,19 @@ const PostEdit = () => {
     error,
   } = useNotificationStatus();
   const { handleClose, handleShow, show } = useModal();
-
-  const { postId, currentPost, setCurrentPost } = useSpecificPost();
-
+  const { post, setPost } = useAbstractPost();
   return (
     <Container className="py-5">
       <Row>
-        <h1>Edit post</h1>
+        <h1>Create a post</h1>
       </Row>
-      <EditingPostForm
-        setPostValues={setCurrentPost}
-        defaultValues={currentPost}
-      />
+      <EditingPostForm setPostValues={setPost} defaultValues={post} />
       <ActionButton
         callbackAction={() => {
-          updatePost(currentPost)
+          createPost(post)
             .then(() => {
-              setNewActionName("Save");
-              modifyPost(parseInt(postId), currentPost);
+              setNewActionName("Add");
+              addPost(post);
               activateNotification();
             })
             .catch((err) => {
@@ -48,14 +42,14 @@ const PostEdit = () => {
               activateNotification();
             });
         }}
-        actionName="Save"
+        actionName="Add"
         show={show}
         handleClose={handleClose}
         handleShow={handleShow}
       />
       <Row className="my-5">
         <h2>Live preview</h2>
-        <PostInfo post={{ ...currentPost }} />
+        <PostInfo post={{ ...post }} />
       </Row>
       <ActionNotification
         show={showNotification}
@@ -67,4 +61,4 @@ const PostEdit = () => {
   );
 };
 
-export default PostEdit;
+export default PostCreate;
