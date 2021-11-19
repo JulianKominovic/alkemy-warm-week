@@ -3,7 +3,9 @@ import { PostsContext } from "../context/PostsContext";
 
 const usePosts = () => {
   const { posts, setPosts } = useContext(PostsContext);
+
   const getAllPosts = () => posts;
+
   const removePostFromContext = (id) => {
     setPosts(posts.filter((post) => post.id !== id));
   };

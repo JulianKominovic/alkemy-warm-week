@@ -55,7 +55,7 @@ const PostEdit = () => {
       />
       <Row className="my-5">
         <h2>Live preview</h2>
-        <PostInfo post={{ ...currentPost }} />
+        <PostInfo previewPost={{ ...currentPost }} />
       </Row>
       <ActionNotification
         show={showNotification}
