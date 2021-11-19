@@ -50,7 +50,7 @@ const PostCreate = () => {
       />
       <Row className="my-5">
         <h2>Live preview</h2>
-        <PostInfo post={{ ...post }} />
+        <PostInfo previewPost={{ ...post }} />
       </Row>
       <ActionNotification
         show={showNotification}
