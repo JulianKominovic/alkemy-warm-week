@@ -5,7 +5,9 @@ import { Link, useHistory } from "react-router-dom";
 import { removePost } from "../services/postsApi";
 import ActionNotification from "./ActionNotification";
 import VerificationModal from "./VerificationModal";
-
+import useModal from "../hooks/useModal";
+import useNotificationStatus from "../hooks/useNotificationStatus";
+import usePosts from "../hooks/usePosts";
 const PostActionButtons = ({ id }) => {
   const {
     location: { pathname },
@@ -17,15 +19,18 @@ const PostActionButtons = ({ id }) => {
   //CHECKS IF THE CURRENT LOCATION IS /CREATE
   const isInCreateLocation = pathname === `/create`;
 
-  // MODAL STATE
-  const [show, setShow] = useState(false);
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
-  // NOTIFICATION STATES
-  const [showNotification, setShowNotification] = useState(false);
-  const [actionName, setActionName] = useState("");
-  const [error, setError] = useState("");
-  const handleShowNotification = () => setShowNotification(true);
+  const { handleClose, handleShow, show } = useModal();
+  const {
+    setNewActionName,
+    setNewErrorName,
+    setShowNotification,
+    showNotification,
+    actionName,
+    error,
+    activateNotification,
+  } = useNotificationStatus();
+
+  const { removePostFromContext } = usePosts();
 
   return (
     <Row className="my-3">
@@ -58,18 +63,27 @@ const PostActionButtons = ({ id }) => {
       </Col>
 
       <Col>
+        <ActionNotification
+          show={showNotification}
+          setShow={setShowNotification}
+          postAction={actionName}
+          errorMessage={error}
+        />
         <VerificationModal
           callbackAction={() =>
             removePost(id)
-              .then((res) => {
-                setError("");
-                setActionName("Remove");
-                handleShowNotification();
+              .then(() => {
+                console.log("eliminado");
+                setNewActionName("Remove");
+                activateNotification(); //aca
+
+                setTimeout(() => {
+                  removePostFromContext(id);
+                }, 3100);
               })
               .catch((err) => {
-                setError(err);
-                setActionName("");
-                handleShowNotification();
+                setNewErrorName(err);
+                activateNotification();
               })
           }
           title="Delete"
@@ -77,12 +91,7 @@ const PostActionButtons = ({ id }) => {
           handleClose={handleClose}
           variant="danger"
         />
-        <ActionNotification
-          show={showNotification}
-          setShow={setShowNotification}
-          postAction={actionName}
-          errorMessage={error}
-        />
+
         <Button
           variant="outline-danger"
           onClick={handleShow}

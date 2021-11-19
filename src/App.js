@@ -7,6 +7,14 @@ import PostCreate from "./pages/PostCreate";
 import PostEdit from "./pages/PostEdit";
 import PostInfo from "./pages/PostInfo";
 
+// TODO manejar las notificaciones en un estado global que renderice en donde este el usuario la notificacion correspondiente
+/* CONTEXT => {
+  show: false,
+  error: "",
+  action:""
+}
+*/
+
 function App() {
   return (
     <Router>

@@ -4,8 +4,11 @@ export default function useNotificationStatus() {
   const [showNotification, setShowNotification] = useState(false);
   const [actionName, setActionName] = useState("");
   const [error, setError] = useState("");
+
   const activateNotification = () => setShowNotification(true);
+
   const deactivateNotification = () => setShowNotification(false);
+
   const setNewErrorName = (error) => {
     setActionName("");
     setError(error);

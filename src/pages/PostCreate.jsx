@@ -10,6 +10,7 @@ import { createPost } from "../services/postsApi";
 import PostInfo from "./PostInfo";
 import useModal from "../hooks/useModal";
 import useAbstractPost from "../hooks/useAbstractPost";
+
 const PostCreate = () => {
   const { addPost } = usePosts();
   const {
@@ -32,9 +33,9 @@ const PostCreate = () => {
       <ActionButton
         callbackAction={() => {
           createPost(post)
-            .then(() => {
+            .then((res) => {
               setNewActionName("Add");
-              addPost(post);
+              addPost(res);
               activateNotification();
             })
             .catch((err) => {

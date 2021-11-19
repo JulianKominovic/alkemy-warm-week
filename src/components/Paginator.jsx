@@ -4,12 +4,7 @@ import { Pagination } from "react-bootstrap";
 const Paginator = ({ setPage, currentPage, minPage }) => {
   useEffect(() => {}, [setPage]);
   return (
-    // TODO correct size on mobile
-    <Pagination size="lg" className="w-100 justify-content-center">
-      <Pagination.First
-        disabled={currentPage === minPage ? true : false}
-        onClick={() => setPage(minPage)}
-      />
+    <Pagination size="lg" className="justify-content-center">
       <Pagination.Prev
         disabled={currentPage === minPage ? true : false}
         onClick={() => setPage(currentPage - 1)}
@@ -27,7 +22,6 @@ const Paginator = ({ setPage, currentPage, minPage }) => {
       </Pagination.Item>
 
       <Pagination.Next onClick={() => setPage(currentPage + 1)} />
-      <Pagination.Last disabled />
     </Pagination>
   );
 };

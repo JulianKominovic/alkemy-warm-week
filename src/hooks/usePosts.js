@@ -15,7 +15,7 @@ const usePosts = () => {
       })
     );
   };
-  const addPost = (newPost) => setPosts((prev) => [...prev, newPost]);
+  const addPost = (newPost) => setPosts((prev) => [...prev, { ...newPost }]);
   const isAnyPostLoaded = () => posts.length > 0;
   return {
     getAllPosts,

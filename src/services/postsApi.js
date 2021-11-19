@@ -88,7 +88,6 @@ export const createPost = (newPost) => {
           ...newPost,
         })
         .then((res) => {
-          console.log(res);
           if (res.status === 201 && res.data.id !== undefined) {
             resolve(res.data);
           } else {

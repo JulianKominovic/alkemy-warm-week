@@ -67,7 +67,7 @@ const Home = () => {
                   ) : null
                 )}
                 {/* LOADS ONLY THE POST SEARCH BY ID */}
-                {/* TODO si hubiese un context con los post del usuario, podria removerlo de ahi al presionar el boton de eliminar */}
+
                 {getAllPosts().map((post) =>
                   post.id === searchingId ? (
                     <PostCard key={post.id} {...post} />
