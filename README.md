@@ -3,7 +3,11 @@ This small project was made during the first week of Alkemy's Accelation in orde
 In my case this project was perfect to practice the custom-hooks pattern in React.
 
 ## Live demo
-[![Netlify Status](https://api.netlify.com/api/v1/badges/94584ff6-974c-4afa-9792-966d877e4568/deploy-status)](https://app.netlify.com/sites/jk-alkemy-warming-week/deploys)
+
+
+<a href="https://jk-alkemy-warming-week.netlify.app/" target="_blank">
+<img src="https://api.netlify.com/api/v1/badges/94584ff6-974c-4afa-9792-966d877e4568/deploy-status"/>
+</a>
 
 
 ### Have to improve:
