@@ -15,6 +15,7 @@ In my case this project was perfect to practice the custom-hooks pattern in Reac
 -  API error managment
 -  Better components props, for a better and more easy way to re-use them
 -  Mobile design
+-  Logout button
 
 
 ### Features
@@ -24,3 +25,5 @@ In my case this project was perfect to practice the custom-hooks pattern in Reac
 - Warning notification
 - Success and error notification
 - Real-time post searching by ID
+- Local stored token
+- Login authentification
